@@ -10,9 +10,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Background Animated Blobs -->
-    <div class="bg-blob blob-1"></div>
-    <div class="bg-blob blob-2"></div>
+    <canvas id="neural-bg"></canvas>
 
     <nav class="glass-nav">
         <div class="nav-container">
@@ -136,5 +134,107 @@
             <p class="copyright">© 2026 Ys-Runtime. Built & crafted by hand.</p>
         </div>
     </footer>
+    <script>
+        // === Animated CPU / Neural Network Background ===
+        (function () {
+            const canvas = document.getElementById('neural-bg');
+            const ctx = canvas.getContext('2d');
+            let W, H;
+            const NODE_COUNT = 70;
+            const LINK_DIST = 160;      // jarak koneksi antar node
+            const NEURON_COLOR = '0,240,255';   // cyan
+            const SYNAPSE_COLOR = '112,0,255';  // ungu
+            // karakter "data" / kode yang melayang
+            const CODE_CHARS = '01{}[]();<>/\\=+*#&%@$_-abcdefghijklmnopqrstuvwxyz'.split('');
+
+            let nodes = [];
+            let codeParticles = [];
+
+            function resize() {
+                W = canvas.width = window.innerWidth;
+                H = canvas.height = window.innerHeight;
+                init();
+            }
+
+            function init() {
+                nodes = [];
+                for (let i = 0; i < NODE_COUNT; i++) {
+                    nodes.push({
+                        x: Math.random() * W,
+                        y: Math.random() * H,
+                        vx: (Math.random() - 0.5) * 0.6,
+                        vy: (Math.random() - 0.5) * 0.6,
+                        r: Math.random() * 2 + 1
+                    });
+                }
+                codeParticles = [];
+                for (let i = 0; i < 55; i++) {
+                    codeParticles.push({
+                        x: Math.random() * W,
+                        y: Math.random() * H,
+                        char: CODE_CHARS[Math.floor(Math.random() * CODE_CHARS.length)],
+                        size: Math.random() * 14 + 9,
+                        speed: Math.random() * 0.4 + 0.15,
+                        alpha: Math.random() * 0.25 + 0.06,
+                        drift: (Math.random() - 0.5) * 0.3
+                    });
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, W, H);
+
+                // --- partikel kode (melayang naik, alpha rendah) ---
+                for (const p of codeParticles) {
+                    p.y -= p.speed;
+                    p.x += p.drift;
+                    if (p.y < -20) { p.y = H + 20; p.x = Math.random() * W; }
+                    if (p.x < -20) p.x = W + 20;
+                    if (p.x > W + 20) p.x = -20;
+                    ctx.font = p.size + 'px "Courier New", monospace';
+                    ctx.fillStyle = 'rgba(' + NEURON_COLOR + ',' + p.alpha + ')';
+                    ctx.fillText(p.char, p.x, p.y);
+                }
+
+                // --- garis synapse antar node dekat ---
+                for (let i = 0; i < nodes.length; i++) {
+                    for (let j = i + 1; j < nodes.length; j++) {
+                        const a = nodes[i], b = nodes[j];
+                        const dx = a.x - b.x, dy = a.y - b.y;
+                        const dist = Math.hypot(dx, dy);
+                        if (dist < LINK_DIST) {
+                            const op = (1 - dist / LINK_DIST) * 0.35;
+                            ctx.strokeStyle = 'rgba(' + SYNAPSE_COLOR + ',' + op + ')';
+                            ctx.lineWidth = 0.7;
+                            ctx.beginPath();
+                            ctx.moveTo(a.x, a.y);
+                            ctx.lineTo(b.x, b.y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                // --- neuron nodes ---
+                for (const n of nodes) {
+                    n.x += n.vx;
+                    n.y += n.vy;
+                    if (n.x < 0 || n.x > W) n.vx *= -1;
+                    if (n.y < 0 || n.y > H) n.vy *= -1;
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(' + NEURON_COLOR + ',0.8)';
+                    ctx.shadowColor = 'rgba(' + NEURON_COLOR + ',0.8)';
+                    ctx.shadowBlur = 8;
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+                requestAnimationFrame(draw);
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+            draw();
+        })();
+    </script>
 </body>
 </html>
