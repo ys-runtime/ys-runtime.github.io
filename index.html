@@ -144,11 +144,25 @@
             const LINK_DIST = 160;      // jarak koneksi antar node
             const NEURON_COLOR = '0,240,255';   // cyan
             const SYNAPSE_COLOR = '112,0,255';  // ungu
-            // karakter "data" / kode yang melayang
-            const CODE_CHARS = '01{}[]();<>/\\=+*#&%@$_-abcdefghijklmnopqrstuvwxyz'.split('');
+            // Kata-kata ML/AI yang melayang lembut
+            const ML_WORDS = ['Neuron', 'Epoch', 'Loss', 'Gradient', 'Vector', 'Embedding',
+                              'Transformer', 'Backprop', 'Tensor', 'Weight', 'Bias', 'Learning Rate',
+                              'Fine-tune', 'LoRA', 'Inference', 'RAG', 'Tokenizer', 'Attention'];
+            // Snippet kode pendek (tipis, transparan) — sentuhan programer
+            const SNIPPETS = [
+                'import torch\nmodel.train()',
+                'from peft import LoraConfig',
+                'loss.backward()\nopt.step()',
+                'class NeuralNet(nn.Module):',
+                'output = model(x)',
+                'optimizer.zero_grad()',
+                'emb = model.encode(text)',
+                'for epoch in range(50):'
+            ];
 
             let nodes = [];
-            let codeParticles = [];
+            let mlParticles = [];
+            let snippetParticles = [];
 
             function resize() {
                 W = canvas.width = window.innerWidth;
@@ -167,16 +181,30 @@
                         r: Math.random() * 2 + 1
                     });
                 }
-                codeParticles = [];
-                for (let i = 0; i < 55; i++) {
-                    codeParticles.push({
+                // kata-kata ML melayang lembut
+                mlParticles = [];
+                for (let i = 0; i < 16; i++) {
+                    mlParticles.push({
                         x: Math.random() * W,
                         y: Math.random() * H,
-                        char: CODE_CHARS[Math.floor(Math.random() * CODE_CHARS.length)],
-                        size: Math.random() * 14 + 9,
-                        speed: Math.random() * 0.4 + 0.15,
-                        alpha: Math.random() * 0.25 + 0.06,
-                        drift: (Math.random() - 0.5) * 0.3
+                        word: ML_WORDS[i % ML_WORDS.length],
+                        size: Math.random() * 12 + 10,
+                        speed: Math.random() * 0.25 + 0.08,
+                        alpha: Math.random() * 0.10 + 0.05,
+                        drift: (Math.random() - 0.5) * 0.2
+                    });
+                }
+                // snippet kode tipis melayang pelan
+                snippetParticles = [];
+                for (let i = 0; i < 5; i++) {
+                    snippetParticles.push({
+                        x: Math.random() * W,
+                        y: Math.random() * H,
+                        code: SNIPPETS[i % SNIPPETS.length],
+                        size: 11,
+                        speed: Math.random() * 0.18 + 0.06,
+                        alpha: Math.random() * 0.08 + 0.04,
+                        drift: (Math.random() - 0.5) * 0.15
                     });
                 }
             }
@@ -184,16 +212,32 @@
             function draw() {
                 ctx.clearRect(0, 0, W, H);
 
-                // --- partikel kode (melayang naik, alpha rendah) ---
-                for (const p of codeParticles) {
+                // --- kata-kata ML melayang naik (alpha sangat rendah) ---
+                for (const p of mlParticles) {
                     p.y -= p.speed;
                     p.x += p.drift;
-                    if (p.y < -20) { p.y = H + 20; p.x = Math.random() * W; }
-                    if (p.x < -20) p.x = W + 20;
-                    if (p.x > W + 20) p.x = -20;
-                    ctx.font = p.size + 'px "Courier New", monospace';
+                    if (p.y < -30) { p.y = H + 30; p.x = Math.random() * W; }
+                    if (p.x < -40) p.x = W + 20;
+                    if (p.x > W + 40) p.x = -20;
+                    ctx.font = '600 ' + p.size + 'px "Space Grotesk", sans-serif';
                     ctx.fillStyle = 'rgba(' + NEURON_COLOR + ',' + p.alpha + ')';
-                    ctx.fillText(p.char, p.x, p.y);
+                    ctx.fillText(p.word, p.x, p.y);
+                }
+
+                // --- snippet kode melayang (tipis, background) ---
+                for (const s of snippetParticles) {
+                    s.y -= s.speed;
+                    s.x += s.drift;
+                    if (s.y < -80) { s.y = H + 60; s.x = Math.random() * W; }
+                    if (s.x < -150) s.x = W + 20;
+                    if (s.x > W + 150) s.x = -20;
+                    const lines = s.code.split('\n');
+                    // render per baris, spasi rapi
+                    for (let i = 0; i < lines.length; i++) {
+                        ctx.font = s.size + 'px "Courier New", monospace';
+                        ctx.fillStyle = 'rgba(' + SYNAPSE_COLOR + ',' + s.alpha + ')';
+                        ctx.fillText(lines[i], s.x, s.y + i * (s.size + 4));
+                    }
                 }
 
                 // --- garis synapse antar node dekat ---
