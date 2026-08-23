@@ -29,13 +29,13 @@
     </nav>
 
     <main>
-        <section id="hero" class="hero-section">
+        <section id="about" class="hero-section">
             <div class="hero-content glass-card">
                 <p class="greeting">Hello World, I am</p>
                 <h1 class="name">Ys-Runtime</h1>
-                <h2 class="title">AI Engineer & <span class="highlight">Developer</span></h2>
+                <h2 class="title">AI Engineer & <span class="highlight">Machine Learning Practitioner</span></h2>
                 <p class="bio">
-                    Building the future with Artificial Intelligence. Currently on a 30-day journey building 4 end-to-end AI applications, from RAG Chatbots to MLOps.
+                    I build end-to-end AI systems — from fine-tuning Indonesian language models to production-ready data pipelines. Focused on NLP, RAG, and practical MLOps that ship real products.
                 </p>
                 <div class="cta-buttons">
                     <a href="#projects" class="btn btn-primary">View Projects</a>
@@ -48,48 +48,48 @@
             <h2 class="section-title">My <span class="highlight">Projects</span></h2>
             <div class="projects-grid">
                 
-                <!-- Project 1 -->
+                <!-- Project 1: SentimentGovtechLora -->
                 <div class="project-card glass-card">
                     <div class="project-tag">01</div>
-                    <h3 class="project-title">RAG Chatbot</h3>
-                    <p class="project-desc">A context-aware chatbot using Retrieval-Augmented Generation, vector databases (Chroma), and LLMs.</p>
+                    <h3 class="project-title">Indonesian Sentiment Model (IndoBERT + LoRA)</h3>
+                    <p class="project-desc">Fine-tuned IndoBERT with LoRA for Indonesian sentiment analysis on Google Play app reviews. Published to Hugging Face with a model card and reproducible training pipeline.</p>
                     <div class="project-tech">
-                        <span>LangChain</span><span>Vector DB</span><span>LLM API</span>
+                        <span>PyTorch</span><span>HuggingFace</span><span>LoRA</span><span>IndoBERT</span>
                     </div>
-                    <a href="#" class="project-link">View Details &rarr;</a>
+                    <a href="https://huggingface.co/corpv/indobert-sentiment-govtech-lora" target="_blank" class="project-link">View on HF &rarr;</a>
                 </div>
 
-                <!-- Project 2 -->
+                <!-- Project 2: PyProc -->
                 <div class="project-card glass-card">
                     <div class="project-tag">02</div>
-                    <h3 class="project-title">Autonomous AI Agent</h3>
-                    <p class="project-desc">Task automation agent with tool integration and function calling capabilities.</p>
+                    <h3 class="project-title">PyProc</h3>
+                    <p class="project-desc">Python library/CLI/MCP server for Indonesian government procurement data (LPSE-SPSE). Exposes structured data access via CLI, Python API, and an MCP server.</p>
                     <div class="project-tech">
-                        <span>LangGraph</span><span>Tool Use</span><span>Python</span>
+                        <span>Python</span><span>CLI</span><span>MCP</span><span>Data</span>
                     </div>
-                    <a href="#" class="project-link">View Details &rarr;</a>
+                    <a href="#projects" class="project-link">View Details &rarr;</a>
                 </div>
 
-                <!-- Project 3 -->
+                <!-- Project 3: SirupScraper -->
                 <div class="project-card glass-card">
                     <div class="project-tag">03</div>
-                    <h3 class="project-title">PEFT / LoRA Fine-Tuning</h3>
-                    <p class="project-desc">Custom fine-tuned small language model optimized for specific domain tasks.</p>
+                    <h3 class="project-title">SirupScraper</h3>
+                    <p class="project-desc">Web scraper that collects and structures procurement packages data (SIRUP/SPSE) — automating large-scale data capture from a public procurement portal.</p>
                     <div class="project-tech">
-                        <span>PyTorch</span><span>HuggingFace</span><span>LoRA</span>
+                        <span>Python</span><span>Web Scraping</span><span>Data Pipeline</span>
                     </div>
-                    <a href="#" class="project-link">View Details &rarr;</a>
+                    <a href="#projects" class="project-link">View Details &rarr;</a>
                 </div>
 
-                <!-- Project 4 -->
+                <!-- Project 4: RAG Chatbot -->
                 <div class="project-card glass-card">
                     <div class="project-tag">04</div>
-                    <h3 class="project-title">AI Deployment (MLOps)</h3>
-                    <p class="project-desc">Production-ready AI deployment pipeline with API endpoints and monitoring.</p>
+                    <h3 class="project-title">RAG Chatbot</h3>
+                    <p class="project-desc">A local Retrieval-Augmented Generation chatbot using vector databases (ChromaDB) and LLMs for context-aware answers over private documents.</p>
                     <div class="project-tech">
-                        <span>Docker</span><span>FastAPI</span><span>MLOps</span>
+                        <span>RAG</span><span>ChromaDB</span><span>LLM</span><span>Python</span>
                     </div>
-                    <a href="#" class="project-link">View Details &rarr;</a>
+                    <a href="#projects" class="project-link">View Details &rarr;</a>
                 </div>
 
             </div>
@@ -102,9 +102,9 @@
                     <h3>AI & Machine Learning</h3>
                     <div class="skill-tags">
                         <span>Large Language Models</span>
-                        <span>RAG</span>
-                        <span>AI Agents</span>
+                        <span>RAG / Vector Search</span>
                         <span>Fine-Tuning (LoRA)</span>
+                        <span>Sentiment Analysis</span>
                         <span>Prompt Engineering</span>
                     </div>
                 </div>
@@ -112,11 +112,12 @@
                     <h3>Tools & Frameworks</h3>
                     <div class="skill-tags">
                         <span>Python</span>
-                        <span>LangChain / LangGraph</span>
                         <span>PyTorch</span>
+                        <span>HuggingFace</span>
                         <span>Docker</span>
                         <span>FastAPI</span>
                         <span>ChromaDB</span>
+                        <span>MCP</span>
                     </div>
                 </div>
             </div>
@@ -126,12 +127,12 @@
     <footer>
         <div class="footer-content glass-card" id="contact">
             <h2>Let's Connect</h2>
-            <p>Ready to collaborate on innovative AI solutions?</p>
+            <p>Open to remote AI/ML engineering opportunities worldwide.</p>
             <div class="social-links">
-                <a href="https://linkedin.com/in/ys-runtime" target="_blank">LinkedIn</a>
-                <a href="mailto:your.email@example.com">Email Me</a>
+                <a href="https://www.linkedin.com/in/yensufx/" target="_blank">LinkedIn</a>
+                <a href="mailto:ys.runtime@gmail.com">Email Me</a>
             </div>
-            <p class="copyright">© 2026 Ys-Runtime. Built during the 30-Day AI Portfolio Challenge.</p>
+            <p class="copyright">© 2026 Ys-Runtime. Built & crafted by hand.</p>
         </div>
     </footer>
 </body>
